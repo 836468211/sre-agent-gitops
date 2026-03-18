@@ -21,6 +21,15 @@ spec:
         image: ollama/ollama:latest
         ports:
         - containerPort: 11434
+         # 新增：挂载 PVC 到 Ollama 模型目录
+        volumeMounts:
+        - name: ollama-model-volume
+          mountPath: /root/.ollama
+      # 新增：关联 PVC
+      volumes:
+      - name: ollama-model-volume
+        persistentVolumeClaim:
+          claimName: ollama-model-pvc
 ---
 apiVersion: v1
 kind: Service
